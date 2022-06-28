@@ -2,5 +2,13 @@
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  background-color: blue;
+  background-color: #232323;
+}
+
+.footer__logo{
+  width:130px;
+  object-fit: contain;
+  margin: 10px 20px;
+  padding-top: 5.5px;
+  text-align: left;
 }
