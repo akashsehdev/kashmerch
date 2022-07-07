@@ -35,19 +35,19 @@ function Product({ id, title, image, price, rating }) {
   };
 
   //View Product
-  const viewProduct = () => {
-    //dispatch the item into the data layer
-    dispatch({
-      type: "VIEW_PRODUCT",
-      item: {
-        id:id,
-        title: title,
-        image: image,
-        price: price,
-        rating: rating,
-      },
-    });
-  };
+  // const viewProduct = () => {
+  //   //dispatch the item into the data layer
+  //   dispatch({
+  //     type: "VIEW_PRODUCT",
+  //     item: {
+  //       id:id,
+  //       title: title,
+  //       image: image,
+  //       price: price,
+  //       rating: rating,
+  //     },
+  //   });
+  // };
 
   return (
     <div className="product">
@@ -55,7 +55,7 @@ function Product({ id, title, image, price, rating }) {
       <div className="product__info">
         <p>{title}</p>
         <p className="product__price">
-          <small>$</small>
+          <small>₹</small>
           <strong>{price}</strong>
         </p>
 

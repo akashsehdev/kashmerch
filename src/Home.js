@@ -16,6 +16,7 @@ import beltQR from "./img/belt_QR.png";
 import baby from "./img/baby.jfif";
 import earring from "./img/earrings.jpg";
 
+
 function Home() {
   return (
     <div className="home">

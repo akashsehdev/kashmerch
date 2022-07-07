@@ -76,10 +76,12 @@ function Header() {
             </span>
           </div>
         </Link>
-        <div className="header__option">
+       <Link to="/orders" style={{ textDecoration: "none" }}>
+       <div className="header__option">
           <span className="header__optionlineone">Returns</span>
           <span className="header__optionlinetwo">& Orders</span>
         </div>
+       </Link>
         {/* <div className="header__option">
           <span className="header__optionlineone">Your</span>
           <span className="header__optionlinetwo">Prime</span>

@@ -24,7 +24,7 @@ function Payment() {
 
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
-  const [clientSecret, setClientSecret] = useState(true);
+  const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
     // generate the special stripe secret which allows us to charge a customer
@@ -35,7 +35,7 @@ function Payment() {
         url: `/payments/create?total=${getBasketTotal(basket) * 100}`
       });
       setClientSecret(response.data.clientSecret);
-    };
+    }; 
 
     getClientSecret();
   }, [basket]);
@@ -50,31 +50,30 @@ function Payment() {
     setProcessing(true);
 
     const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
+     .confirmCardPayment(clientSecret, {
+      payment_method: {
           card: elements.getElement(CardElement)
-        }
-      })
-      .then(({ paymentIntent }) => {
-        // paymentIntent = payment confirmation
+      },
+  }).then(({ paymentIntent }) => {
+      db
+      .collection("users")
+      .doc(user?.uid)
+      .collection("orders")
+      .doc(paymentIntent.id)
+      .set({
+          basket: basket,
+          amount: paymentIntent.amount,
+          created: paymentIntent.created,
+      });
 
-        db.collections("users")
-          .doc(user?.uid)
-          .collections("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket: basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
-          });
+      setSucceeded(true);
+      setError(null)
+      setProcessing(false)
 
-        setSucceeded(true);
-        setError(null)
-        setProcessing(false)
-
-        dispatch({
+      dispatch({
           type: "EMPTY_BASKET"
-        });
+      });
+      
 
         // history.replace('/orders')
         navigate("/orders", { replace: true });
@@ -82,14 +81,14 @@ function Payment() {
       });
   };
 
-  const handleChange = event => {
+  const handleChange = (event) => {
     // Listen for changes in the CardElement
     // and display any errors as the customer types their card details
     //if event is empty disabled the button
     setDisabled(event.empty);
     //if event has error show the error
     setError(event.error ? event.error.message : "");
-  }
+  };
 
   return (
     <div className="payment">
@@ -116,7 +115,7 @@ function Payment() {
             <h3>Review items and delivery</h3>
           </div>
           <div className="payment__items">
-            {basket.map(item => (
+            {basket.map((item) => (
               <CheckoutProduct
                 id={item.id}
                 title={item.title}
@@ -160,10 +159,10 @@ function Payment() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Payment
+export default Payment;
 
 // firebase init
 // functions: configure and deploy cloud functions
