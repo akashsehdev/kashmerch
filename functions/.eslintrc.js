@@ -6,9 +6,16 @@ module.exports = {
   },
   extends: [
     "eslint:recommended",
-    "google",
+    "google"
   ],
   rules: {
     quotes: ["error", "double"],
   },
+
+  parserOptions: {
+    "ecmaVersion": 6,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+
 };
